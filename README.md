@@ -19,7 +19,7 @@ $ pip install flask
 
 2. Luo tietokannan taulut:
 ```bash
-$ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < sql/schema.sql
 ```
 
 3. Sovelluksen käynnistys:
