@@ -2,31 +2,37 @@
 <html>
 
 <head>
-  <title>Login</title>
+    <title>Login</title>
 </head>
 
 <body>
-  {% if session.username %}
-  <p>
-    You have logged in as {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-  {% else %}
-  <form action="/login" method="post">
+    {% for message in get_flashed_messages() %}
+        <div class="info">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% if session.username %}
     <p>
-      Username: <br />
-      <input type="text" name="username" />
+        You have logged in as {{ session.username }}
     </p>
     <p>
-      Password: <br />
-      <input type="password" name="password" />
+        <a href="/logout">Log out</a>
     </p>
-    <input type="submit" value="Log in" />
-    <p><a href="/register">No account? Register here</a></p>
-  </form>
-  {% endif %}
+    {% else %}
+    <form action="/login" method="post">
+        <p>
+            Username: <br />
+            <input type="text" name="username" />
+        </p>
+        <p>
+            Password: <br />
+            <input type="password" name="password" />
+        </p>
+        <input type="submit" value="Log in" />
+        <p><a href="/register">No account? Register here</a></p>
+    </form>
+    {% endif %}
 </body>
 
 </html>

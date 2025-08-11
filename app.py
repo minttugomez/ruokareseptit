@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from repositories.user_repository import create_user, get_password_hash
 import sqlite3
@@ -20,16 +20,25 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+    if len(username) < 4:
+        flash("ERROR: username must be at least 4 characters")
+        return redirect("/register")
+    if len(password1) < 8:
+        flash("ERROR: password must be at least 8 characters")
+        return redirect("/register")
     if password1 != password2:
-        return "ERROR: passwords do not match"
+        flash("ERROR: passwords do not match")
+        return redirect("/register")
     password_hash = generate_password_hash(password1)
 
     try:
         create_user(username, password_hash)
     except sqlite3.IntegrityError:
-        return "ERROR: username is not available"
+        flash("ERROR: username is not available")
+        return redirect("/register")
 
-    return "Registration complete"
+    flash("Registration successful. You may now log in.")
+    return redirect("/")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -42,7 +51,8 @@ def login():
         session["username"] = username
         return redirect("/")
     else:
-        return "ERROR: wrong username or password"
+        flash("ERROR: wrong username or password")
+        return redirect("/")
 
 @app.route("/logout")
 def logout():
