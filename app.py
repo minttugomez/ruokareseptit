@@ -38,7 +38,7 @@ def login():
 
     password_hash = get_password_hash(username)
 
-    if check_password_hash(password_hash, password):
+    if password_hash is not None and check_password_hash(password_hash, password):
         session["username"] = username
         return redirect("/")
     else:

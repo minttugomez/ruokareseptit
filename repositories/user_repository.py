@@ -6,5 +6,5 @@ def create_user(username, password_hash):
 
 def get_password_hash(username):
     sql = "SELECT password_hash FROM users WHERE username = ?"
-    password_hash = db.query(sql, [username])[0][0]
-    return password_hash
+    result = db.query(sql, [username])
+    return result[0][0] if result else None
