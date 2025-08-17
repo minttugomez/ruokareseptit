@@ -2,7 +2,7 @@ import db
 
 def get_all_recipes():
     sql = "SELECT * FROM recipes"
-    db.query(sql)
+    return db.query(sql)
 
 def add_new_recipe(user_id, title, description, ingredients, instructions):
     sql = """
