@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from repositories.user_repository import create_user, get_password_hash
+from repositories.recipe_repository import get_all_recipes
 import sqlite3
 import config
 
@@ -11,7 +12,8 @@ app.secret_key = config.secret_key
 def index():
     if "username" not in session:
         return redirect("/login")
-    return render_template("index.html")
+    recipes = get_all_recipes() or []
+    return render_template("index.html", recipes=recipes)
 
 @app.route("/login", methods=["GET"])
 def login_page():
