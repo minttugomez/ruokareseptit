@@ -23,6 +23,10 @@ def login_page():
 def register():
     return render_template("register.html")
 
+@app.route("/newrecipe")
+def new_recipe():
+    return render_template("new_recipe.html")
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]

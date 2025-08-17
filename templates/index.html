@@ -15,6 +15,9 @@
     <p>
         You have logged in as {{ session.username }}
     </p>
+    <a href="/newrecipe">
+        <button type="button">Add new recipe</button>
+    </a>
     <div>
         <h1>Recipes</h1>
         {% for recipe in recipes %}
