@@ -9,7 +9,13 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
+    if "username" not in session:
+        return redirect("/login")
     return render_template("index.html")
+
+@app.route("/login", methods=["GET"])
+def login_page():
+    return render_template("login.html")
 
 @app.route("/register")
 def register():
