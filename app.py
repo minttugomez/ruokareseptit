@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from repositories.user_repository import create_user, get_password_hash
+from repositories.user_repository import create_user, get_password_hash, get_user_id
 from repositories.recipe_repository import get_all_recipes, add_new_recipe
 import sqlite3
 import config
@@ -78,15 +78,15 @@ def create_recipe():
     if "username" not in session:
         return redirect("/login")
 
-    user_id = session.get("user_id")
+    user_id = get_user_id(session["username"])
+    if not user_id:
+        flash("User not recognized. Please log in again.")
+        return redirect("/login")
+
     title = request.form["title"]
     description = request.form["description"]
     ingredients = request.form["ingredients"]
     instructions = request.form["instructions"]
-
-    if not user_id:
-        flash("User not recognized. Please log in again.")
-        return redirect("/login")
 
     add_new_recipe(user_id, title, description, ingredients, instructions)
     flash("Recipe added successfully!")
