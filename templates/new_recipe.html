@@ -6,7 +6,24 @@
 </head>
 
 <body>
-    <p>Here you can add a new recipe.</p>
+    {% for message in get_flashed_messages() %}
+    <div class="info">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <h1>Add new recipe</h1>
+    <form action="/recipes/create" method="POST">
+        <label>Title:</label><br>
+        <input type="text" name="title" required><br>
+        <label>Description:</label><br>
+        <textarea name="description" required></textarea><br>
+        <label>Ingredients:</label><br>
+        <textarea name="ingredients" required></textarea><br>
+        <label>Instructions:</label><br>
+        <textarea name="instructions" required></textarea><br>
+        <button type="submit">Add Recipe</button>
+    </form>
 </body>
 
 </html>
